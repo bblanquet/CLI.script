@@ -2,10 +2,10 @@ $namespace = "clika"
 
 function Get-NodeNames {
     param (
-        $count
+        $nodeCount
     )
     $names = @()
-    for($i=1; $i -le $count; $i++){
+    for($i=1; $i -le $nodeCount; $i++){
         $names = $names + @((kubectl -o json get nodes | ConvertFrom-Json).items[$i-1].metadata.name)
     }
     return $names
@@ -19,8 +19,11 @@ function Get-NodeAddress{
 }
 
 function Get-ApiList {
+    param(
+        $nodeCount
+    )
     write-host retrieving api urls... it may take a few seconds 
-    $nodeNames = Get-NodeNames -count 3
+    $nodeNames = Get-NodeNames -count $nodeCount
     $apiList = @()
     foreach ($nodeName in $nodeNames) {
         $nodeAddress = Get-NodeAddress $nodeName 
@@ -43,9 +46,9 @@ function Read-Urls {
 
 function Read-Apis{
     param(
-        $count
+        $nodeCount
     )
-    foreach($api in (Get-ApiList -count $count)){
-        Read-Urls $api
+    foreach($api in (Get-ApiList -nodeCount $nodeCount)){
+        Read-Urls -api $api
     }
 }

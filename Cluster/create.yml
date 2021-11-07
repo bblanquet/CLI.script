@@ -5,13 +5,24 @@ metadata:
   name: clika-cluster
   region: us-east-2
 
+vpc:
+  id: {{vpc}}
+  subnets:
+    private:
+      us-west-2a:
+          id: {{private1}}
+      us-west-2c:
+          id: {{private2}}
+    public:
+      us-west-2a:
+          id: {{public1}}
+      us-west-2c:
+          id: {{public2}}
+
 nodeGroups:
   - name: ng-1
     instanceType: t2.micro
     desiredCapacity: 1
   - name: ng-2
-    instanceType: t2.micro
-    desiredCapacity: 1
-  - name: ng-3
     instanceType: t2.micro
     desiredCapacity: 1

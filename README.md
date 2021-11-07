@@ -8,9 +8,6 @@ contains a set of scripts to create an EKS cluster on AWS.
 - set the VPC firewall to access instances
 - display URLs of each instances
 
-./deleteCluster.ps1
-- remove the VPC and all subsets.
-
 # RECIPE
 1. install a bunch of programs
 2. create an IAM user in AWS.
@@ -19,6 +16,7 @@ contains a set of scripts to create an EKS cluster on AWS.
 # STEP #1 INSTALLATION
 list of required programs:
 - POWERSHELL
+- AWS CLI
 - KUBECTL
 - CHOCO (to install EKSCTL)
 - EKSCTL
@@ -29,6 +27,9 @@ https://github.com/PowerShell/PowerShell/releases/download/v7.1.5/PowerShell-7.1
 
 After the installation
 Run a powershell CLI as Administrator and run the below commands
+
+### install aws CLI
+>msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
 
 ### install kubectl
 >curl -LO "https://dl.k8s.io/release/v1.22.0/bin/windows/amd64/kubectl.exe"
@@ -54,9 +55,8 @@ You will need to authenticate with an IAM user with enough credential.
 
 From the below link, create a set of policies to have write/read permissions with (EC2 images, VPC and EKS cluster)
 
-URL_POLICIES
+https://github.com/bibimchi/CLIKA.script/blob/master/credential/policies.txt
 https://console.aws.amazon.com/iamv2/home?#/policies
-
 
 Then attach all these policies to a group and  add a user to the created group.
 https://console.aws.amazon.com/iamv2/home#/groups
@@ -64,4 +64,5 @@ https://console.aws.amazon.com/iamv2/home#/groups
 # STEP #3 execute the script
 Finally retrieve "accessKey" and the "secretKey" of the created user to execute the script</br>
 example: </br>
->.\ AddCluster.py -AccessKey XXXX -SecretKey XXXX</br>
+> aws configure (set accessKey and secretKey)</br>
+>.\ AddCluster.py</br>

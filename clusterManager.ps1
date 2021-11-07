@@ -66,7 +66,7 @@ function Get-ClusterServiceIp{
 
 function Add-ClusterResources{
     param(
-        $count
+        $apiCount
     )
     $ips = @()
 
@@ -74,7 +74,7 @@ function Add-ClusterResources{
     Add-Namespace
 
     #add services and store ip addresses
-    for($i=1; $i -le $count; $i++){
+    for($i=1; $i -le $apiCount; $i++){
         $port = 30000+$i
         Add-ClusterService -port $port
         $ip = Get-ClusterServiceIp -serviceName (-join($serviceName,$port))
@@ -82,7 +82,7 @@ function Add-ClusterResources{
     }
 
     # deploy APIs
-    for($i=1; $i -le $count; $i++){
+    for($i=1; $i -le $apiCount; $i++){
         $port = 30000+$i
         Set-ConfigMapFile -port $port -ip $ips[$i-1] -list ($ips -join ',')
         kubectl apply -f $ConfigMapOutFile

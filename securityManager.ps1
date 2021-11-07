@@ -1,5 +1,5 @@
 $ClusterVpcTagKey = "alpha.eksctl.io/cluster-name"
-$ClusterVpcTagValue = "basic-cluster"
+$ClusterVpcTagValue = "clika-cluster"
 $nodeTag = "eksctl.io/v1alpha2/nodegroup-name"
 
 function Get-ClusterVpc{
