@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment-{{port}}
+  namespace: clika
+  labels:
+    app: api-{{port}}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: api-{{port}}
+  template:
+    metadata:
+      labels:
+        app: api-{{port}}
+    spec:
+      containers:
+      - name: api-{{port}}
+        image: kimchiboy/clika_back:latest
+        imagePullPolicy: "Always"
+        envFrom:
+        - configMapRef:
+            name: api-config-{{port}}
+        ports:
+        - containerPort: 80
+          protocol: TCP
