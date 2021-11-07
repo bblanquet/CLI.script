@@ -17,7 +17,7 @@ function Start-Clika{
     Set-SecurityGroup -count $apiCount
 
     #read apis
-    Read-Apis -count $nodeCount
+    Read-Apis -nodeCount $nodeCount
 }
 
 Start-Clika -apiCount 3 -nodeCount 3

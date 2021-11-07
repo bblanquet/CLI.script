@@ -23,10 +23,10 @@ function Get-ApiList {
         $nodeCount
     )
     write-host retrieving api urls... it may take a few seconds 
-    $nodeNames = Get-NodeNames -count $nodeCount
+    $nodeNames = Get-NodeNames -nodeCount $nodeCount
     $apiList = @()
     foreach ($nodeName in $nodeNames) {
-        $nodeAddress = Get-NodeAddress $nodeName 
+        $nodeAddress = Get-NodeAddress -nodeName $nodeName 
         $nodePods = (kubectl get pod --namespace $namespace -o json --field-selector spec.nodeName=$nodeName | ConvertFrom-Json).items
         foreach ($pod in $nodePods) {
             $nodePort = ($pod.metadata.labels.app).replace('api-','')
